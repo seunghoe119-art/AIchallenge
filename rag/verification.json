@@ -4,7 +4,9 @@
   "bytes": 69749985,
   "subjects": {
     "화재1": 205,
-    "화재2": 85
+    "화재2": 85,
+    "구조": 0,
+    "구급": 0
   },
   "sequences": {
     "화재1": [
@@ -300,11 +302,21 @@
       83,
       84,
       85
-    ]
+    ],
+    "구조": [],
+    "구급": []
   },
   "flagged_pages": [],
   "pages_with_images": 82,
   "pages_with_removed_controls": 0,
+  "missing_sequences": {
+    "화재1": [],
+    "화재2": []
+  },
+  "deferred_subjects": [
+    "구조",
+    "구급"
+  ],
   "unclassified": [],
   "limitations": [
     "Image and table meanings are not guaranteed by text extraction.",

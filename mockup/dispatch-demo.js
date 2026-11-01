@@ -1,0 +1,16 @@
+(()=>{
+const finder=document.getElementById('viewfinder');finder.querySelector('.room').remove();
+const desk=document.createElement('div');desk.className='dispatch-desk';desk.innerHTML='<div class="dispatch-paper"><img src="dispatch-sheet.svg" alt="나무 책상 위 훈련용 출동지령서"></div>';finder.prepend(desk);
+const guides=document.createElement('div');guides.className='dispatch-guides';guides.innerHTML='<div class="doc-outline"><span class="mask-guide left"></span><span class="mask-guide right"></span></div><p id="alignStatus">지령서를 안내선 안에 맞춰 주세요</p>';finder.append(guides);
+const review=document.createElement('section');review.className='screen dispatch-review';review.hidden=true;review.innerHTML='<header><button id="reviewBack" aria-label="다시 촬영">‹</button><b>촬영한 지령서 확인</b></header><div class="review-scroll"><img src="dispatch-redacted.svg" alt="긴급구조번호와 우측 정보 값이 완전한 검정색으로 가려진 지령서"><p>지정 영역을 검정 처리했습니다.</p></div><div class="review-actions"><button id="retakeDispatch">다시 촬영</button><button id="sendDispatch" disabled>전송</button><small>전송 전 확인 단계 · 아직 전송하지 않았습니다.</small></div>';phone.append(review);
+const beforeReset=reset;reset=function(a=true){review.hidden=true;phone.classList.remove('review-on');desk.classList.remove('aligning');beforeReset(a);};
+const beforeText=openText;openText=function(){review.hidden=true;phone.classList.remove('review-on');beforeText();};
+startCaptureTimer=function(){desk.classList.remove('aligning');void desk.offsetWidth;desk.classList.add('aligning');const end=performance.now()+7000;
+function update(){if(captured||!opened)return;const left=Math.max(0,Math.ceil((end-performance.now())/1000));document.getElementById('captureStatus').textContent=left+'초 후 자동 촬영';const aligned=left<=1;document.getElementById('alignStatus').textContent=aligned?'정위치 · 촬영 준비 완료':'지령서를 안내선 안에 맞춰 주세요';guides.classList.toggle('aligned',aligned);state.textContent='좌우 이동 · 확대 · 정위치 정렬 후 촬영합니다.';if(!left)capturePhoto();else later(update,80);}update();};
+capturePhoto=function(){if(captured||!opened)return;captured=true;clear();desk.classList.remove('aligning');guides.classList.add('aligned');const f=document.getElementById('flash');f.classList.remove('snap');void f.offsetWidth;f.classList.add('snap');document.getElementById('captureStatus').textContent='촬영 완료 · 지정 영역 검정 처리';later(showReview,550);};
+document.getElementById('shutter').onclick=()=>capturePhoto();
+function showReview(){clear();camera.inert=true;voice.inert=true;textPanel.hidden=true;phone.classList.remove('text-on','answer-on');phone.classList.add('review-on');review.hidden=false;review.querySelector('.review-scroll').scrollTop=0;step(5);document.getElementById('continueFlow').hidden=true;state.textContent='검정 처리된 촬영 결과 확인 · 전송 전 대기 중';}
+function retake(){reset(false);openCamera();}
+document.getElementById('reviewBack').onclick=retake;document.getElementById('retakeDispatch').onclick=retake;
+const steps=document.querySelectorAll('aside li');steps[2].querySelector('p').textContent='7초 동안 정렬한 뒤 촬영하고 검정 처리된 결과를 확인합니다.';steps[4].innerHTML='<b>05 · 촬영 결과 · 전송 전 확인</b><p>가림 처리된 지령서를 확인하고 전송 전에 멈춥니다.</p>';steps[4].onclick=()=>{reset(false);captured=true;opened=true;showReview();};
+})();

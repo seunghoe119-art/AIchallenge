@@ -19,7 +19,18 @@ else if(index===2)caption.innerHTML='<span>그때, 현장에서 바로 물어볼
 }
 clip.addEventListener('timeupdate',updateCaption);clip.addEventListener('seeking',updateCaption);
 function load(i){index=i;label.textContent='기대효과 '+(i+1)+' / '+files.length;next.hidden=i===files.length-1;next.textContent=(i===0?'두 번째':'세 번째')+' 영상 ▶';clip.src=files[i];updateCaption();clip.play().catch(()=>{label.textContent+=' · 재생 버튼을 눌러 주세요';});}
-next.onclick=()=>load(index+1);clip.onended=()=>{if(index<files.length-1)load(index+1);};
+next.onclick=()=>load(index+1);clip.onended=()=>{if(index<files.length-1)load(index+1);else revealActualSituation();};
 clip.onerror=()=>{label.textContent='영상을 불러오지 못했습니다.';};
 panel.append(clip,label,close,next,notice,caption);document.body.append(panel);document.body.classList.add('film-playing');load(0);
 };
+
+function revealActualSituation(){
+let button=document.getElementById('actualSituationButton');
+if(!button){
+const anchor=document.querySelector('.feature-benefits,.effect-next');if(!anchor)return;
+button=document.createElement('button');button.id='actualSituationButton';button.className='actual-situation-button';button.innerHTML='실제상황설명 <span>↗</span>';anchor.before(button);
+const style=document.createElement('style');style.textContent='.actual-situation-button{display:flex!important;align-items:center;justify-content:space-between;width:100%;padding:18px 20px!important;margin:16px 0!important;border:1px solid #69cfff!important;border-radius:15px;background:linear-gradient(115deg,#1164b4,#207fc8,#24a9ba)!important;color:white!important;font-size:17px!important;font-weight:750!important;cursor:pointer;animation:actualSituationGlow 1.8s ease-in-out infinite}@keyframes actualSituationGlow{0%,100%{box-shadow:0 0 9px #2198d766;filter:brightness(1)}50%{box-shadow:0 0 26px #27bdd9aa,0 0 8px #409eff88;filter:brightness(1.18)}}.actual-situation-dialog{width:min(520px,90vw);border:1px solid #d0e1ee;border-radius:24px;padding:30px;background:#f8fbff;color:#17334d;font-family:Pretendard,sans-serif;line-height:1.9;box-shadow:0 20px 80px #051c4166}.actual-situation-dialog::backdrop{background:#06182c99;backdrop-filter:blur(6px)}.actual-situation-dialog h2{margin:0 0 18px;font-size:23px}.actual-situation-dialog button{border:1px solid #bad5ed;background:#e9f3ff;color:#205d92;border-radius:12px;padding:12px 24px;cursor:pointer}@media(prefers-reduced-motion:reduce){.actual-situation-button{animation:none}}';document.head.append(style);
+button.onclick=()=>{let dialog=document.getElementById('actualSituationDialog');if(!dialog){dialog=document.createElement('dialog');dialog.id='actualSituationDialog';dialog.className='actual-situation-dialog';dialog.innerHTML='<h2>실제상황설명</h2><p>청라센터 근무 당시, 1년 차 2경방이었던 저는<br>내근 10년을 마친 1경방 대원과 키즈카페 건물에 출동했습니다.</p><p>막상 올라가니 연기가 가득해, 더 이상 앞으로 나아갈 수 없었습니다.</p><form method="dialog"><button>닫기</button></form>';document.body.append(dialog);}dialog.showModal();};
+}
+button.scrollIntoView({behavior:'smooth',block:'nearest'});
+}

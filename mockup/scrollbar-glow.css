@@ -1,0 +1,8 @@
+
+/* Visible gradient scrollbar for presentation sidebars. */
+.controls,body.feature-controlled>aside{scrollbar-width:auto;scrollbar-color:auto;scrollbar-gutter:stable}
+.controls::-webkit-scrollbar,body.feature-controlled>aside::-webkit-scrollbar{width:15px}
+.controls::-webkit-scrollbar-track,body.feature-controlled>aside::-webkit-scrollbar-track{background:linear-gradient(180deg,#e9f3ff,#dcecf9);border-radius:20px;box-shadow:inset 0 0 5px #76b4e84d}
+.controls::-webkit-scrollbar-thumb,body.feature-controlled>aside::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#83f1ed 0%,#28b5ed 38%,#3279f5 72%,#8174f4 100%);border:3px solid #e5f1fc;border-radius:20px;box-shadow:0 0 8px #299effaa,inset 0 0 3px #ffffffbb;min-height:64px}
+.controls::-webkit-scrollbar-thumb:hover,body.feature-controlled>aside::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#affff5,#13c1f0,#236cff,#9f83ff);box-shadow:0 0 12px #208fff}
+.controls::-webkit-scrollbar-button,body.feature-controlled>aside::-webkit-scrollbar-button{display:none}

@@ -1,6 +1,6 @@
 (()=>{
 const input=document.getElementById('typedQuestion'),panel=input.closest('.text-mode'),send=document.getElementById('sendText');
-const sentence='20세 여성, 민감부위에 출혈, 배가 아프다.';
+const sentence='20세 여성, 민감부위에 출혈, 배가 아프다. 남성구급대원2명, 여성구급대원1명. 곤란함.';
 input.value='';input.placeholder='여기를 눌러 질문을 입력해 보세요';input.setAttribute('inputmode','none');
 const keyboard=document.createElement('div');keyboard.className='demo-keyboard';keyboard.setAttribute('aria-label','한글 키보드 시연');keyboard.hidden=true;
 const rows=['ㅂ ㅈ ㄷ ㄱ ㅅ ㅛ ㅕ ㅑ ㅐ ㅔ','ㅁ ㄴ ㅇ ㄹ ㅎ ㅗ ㅓ ㅏ ㅣ','⇧ ㅋ ㅌ ㅊ ㅍ ㅠ ㅜ ㅡ ⌫'];
@@ -13,8 +13,8 @@ function frame(now){if(panel.hidden){reset();return;}const progress=Math.min((no
 if(progress<1)timer=requestAnimationFrame(frame);else{running=false;complete=true;input.readOnly=false;send.disabled=false;keys.forEach(k=>k.classList.remove('pressed'));panel.querySelector('p').textContent='키보드의 완료를 눌러 입력을 마쳐 주세요.';}}
 timer=requestAnimationFrame(frame);}
 function reset(){cancelAnimationFrame(timer);running=false;complete=false;input.readOnly=false;input.value='';send.disabled=false;keyboard.hidden=true;panel.classList.remove('keyboard-open');panel.querySelector('p').textContent='입력창을 누르면 키보드 시연이 시작됩니다.';}
-input.addEventListener('click',()=>{if(complete)reset();start();});
-document.addEventListener('demo:text-entry',()=>{reset();start();});input.addEventListener('keydown',e=>{if(!complete&&(e.key==='Enter'||e.key===' ')){e.preventDefault();start();}});
-let wasHidden=panel.hidden;new MutationObserver(()=>{const hidden=panel.hidden;if(hidden!==wasHidden){wasHidden=hidden;if(hidden)reset();else if(!running&&!complete)start();}}).observe(panel,{attributes:true,attributeFilter:['hidden']});
+input.addEventListener('click',start);
+document.addEventListener('demo:text-entry',start);input.addEventListener('keydown',e=>{if(!complete&&(e.key==='Enter'||e.key===' ')){e.preventDefault();start();}});
+let wasHidden=panel.hidden;new MutationObserver(()=>{const hidden=panel.hidden;if(hidden!==wasHidden){wasHidden=hidden;if(hidden){cancelAnimationFrame(timer);running=false;if(!complete)reset();}else if(!running&&!complete)start();}}).observe(panel,{attributes:true,attributeFilter:['hidden']});
 panel.querySelector('p').textContent='입력창을 누르면 키보드 시연이 시작됩니다.';
 })();

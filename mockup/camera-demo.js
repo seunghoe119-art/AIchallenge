@@ -12,3 +12,9 @@ document.getElementById('openCamera').onclick=openCamera;document.getElementById
 document.getElementById('viewfinder').onclick=e=>{const r=e.currentTarget.getBoundingClientRect(),f=document.getElementById('focus');f.style.animation='none';f.style.left=Math.min(r.width-70,Math.max(0,e.clientX-r.left-34))+'px';f.style.top=Math.min(r.height-70,Math.max(0,e.clientY-r.top-34))+'px';f.style.opacity='1';later(()=>f.style.opacity='0',1400);};
 document.getElementById('shutter').onclick=()=>{const f=document.getElementById('flash');f.classList.remove('snap');void f.offsetWidth;f.classList.add('snap');document.getElementById('thumb').classList.add('taken');document.getElementById('captureStatus').textContent='촬영 완료 · 시연 이미지';};
 document.getElementById('flip').onclick=()=>{document.getElementById('captureStatus').textContent='후면 카메라 시연 화면입니다';};reset(true);
+
+document.querySelectorAll('aside li').forEach((el,i)=>{
+  el.tabIndex=0;el.setAttribute('role','button');el.style.cursor='pointer';
+  const jump=()=>{if(i===0)reset(false);if(i===1){reset(false);step(2);document.getElementById('gesture').classList.remove('show');void document.getElementById('gesture').offsetWidth;document.getElementById('gesture').classList.add('show');later(openCamera,1250);}if(i===2){reset(false);openCamera();}};
+  el.addEventListener('click',jump);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();jump();}});
+});

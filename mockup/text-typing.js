@@ -13,7 +13,8 @@ function frame(now){if(panel.hidden){reset();return;}const progress=Math.min((no
 if(progress<1)timer=requestAnimationFrame(frame);else{running=false;complete=true;input.readOnly=false;send.disabled=false;keys.forEach(k=>k.classList.remove('pressed'));panel.querySelector('p').textContent='키보드의 완료를 눌러 입력을 마쳐 주세요.';}}
 timer=requestAnimationFrame(frame);}
 function reset(){cancelAnimationFrame(timer);running=false;complete=false;input.readOnly=false;input.value='';send.disabled=false;keyboard.hidden=true;panel.classList.remove('keyboard-open');panel.querySelector('p').textContent='입력창을 누르면 키보드 시연이 시작됩니다.';}
-input.addEventListener('click',start);input.addEventListener('keydown',e=>{if(!complete&&(e.key==='Enter'||e.key===' ')){e.preventDefault();start();}});
-new MutationObserver(()=>{if(panel.hidden)reset();}).observe(panel,{attributes:true,attributeFilter:['hidden']});
+input.addEventListener('click',()=>{if(complete)reset();start();});
+document.addEventListener('demo:text-entry',()=>{reset();start();});input.addEventListener('keydown',e=>{if(!complete&&(e.key==='Enter'||e.key===' ')){e.preventDefault();start();}});
+let wasHidden=panel.hidden;new MutationObserver(()=>{const hidden=panel.hidden;if(hidden!==wasHidden){wasHidden=hidden;if(hidden)reset();else if(!running&&!complete)start();}}).observe(panel,{attributes:true,attributeFilter:['hidden']});
 panel.querySelector('p').textContent='입력창을 누르면 키보드 시연이 시작됩니다.';
 })();

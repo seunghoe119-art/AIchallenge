@@ -9,7 +9,7 @@ function render(force=false){const s=cuts.findLastIndex(x=>time>=x);if(s!==stage
 if(s===1||s===5){step(s===1?2:4);gesture.classList.toggle('swipe-left',s===5);void gesture.offsetWidth;gesture.classList.add('show');}
 if(s===2||s===3){original.openCamera();stopLegacy();if(s===3){desk.classList.remove('aligning');document.getElementById('flash').classList.add('snap');}step(3);}
 if(s===4){opened=true;captured=true;phone.classList.add('review-on');review.hidden=false;camera.inert=true;voice.inert=true;step(5);}
-if(s===6){original.openText();stopLegacy();}
+if(s===6){textPanel.getAnimations().forEach(a=>a.cancel());textPanel.style.setProperty('transition','none','important');textPanel.style.setProperty('transform','translateX(0)','important');original.openText();textPanel.classList.add('entered');stopLegacy();}
 }
 if(s===0||s===1||s===5)document.getElementById('count').textContent=Math.max(0,10-Math.floor(s===5?time-14.75:time));
 if(s===2){const n=Math.max(0,Math.ceil(11.25-time));document.getElementById('captureStatus').textContent=n+'초 후 자동 촬영';document.getElementById('alignStatus').textContent=n<=1?'정위치 · 촬영 준비 완료':'지령서를 안내선 안에 맞춰 주세요';document.querySelector('.dispatch-guides').classList.toggle('aligned',n<=1);}

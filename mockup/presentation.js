@@ -26,5 +26,5 @@ window.resume=()=>{question=$('question').value.trim()||question;$('question').b
 window.recognize=()=>seek(20.8);window.record=()=>{playing=true;seek(10.8);};
 const oldCancel=cancel;window.cancel=()=>{playing=false;oldCancel();stopJobs();};
 function tick(now){requestAnimationFrame(tick);const dt=Math.min((now-last)/1000,.1);last=now;if(playing){t=Math.min(28.9,t+dt);if(t===28.9)playing=false;}if(media&&!playing)media.pause();render();}
-if(new URLSearchParams(location.search).get('scene')==='camera-answer'){playing=false;seek(28.9);}else{seek(0);}requestAnimationFrame(tick);
+if(new URLSearchParams(location.search).get('scene')==='text-answer'){question=sessionStorage.getItem('tacticalTypedQuestion')||question;playing=false;seek(28.9);}else if(new URLSearchParams(location.search).get('scene')==='camera-answer'){playing=false;seek(28.9);}else{seek(0);}requestAnimationFrame(tick);
 })();

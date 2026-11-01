@@ -10,7 +10,7 @@ document.getElementById('openCamera').textContent='카메라 열기위해 스와
 const benefit=document.createElement('button');benefit.className='feature-benefits';benefit.innerHTML='기대효과 <span>▶</span>';benefit.onclick=()=>{if(playing){playing=false;render();}window.playEffectVideo();};document.querySelector('aside').append(benefit);
 function stopLegacy(){clear();}
 function render(force=false){const s=cuts.findLastIndex(x=>time>=x);if(s!==stage||force){stage=s;outside=false;original.reset(false);stopLegacy();document.getElementById("flash").classList.remove("snap");review.hidden=true;gesture.classList.remove('show','swipe-left');
-if(s===1||s===5){step(s===1?2:4);gesture.classList.toggle('swipe-left',s===1);void gesture.offsetWidth;gesture.classList.add('show');}
+if(s===1||s===5){step(s===1?2:4);gesture.classList.toggle('swipe-left',s===5);void gesture.offsetWidth;gesture.classList.add('show');}
 if(s===2||s===3){original.openCamera();stopLegacy();if(s===3){desk.classList.remove('aligning');document.getElementById('flash').classList.add('snap');document.getElementById('captureStatus').textContent='촬영 완료 · 지정 영역 검정 처리';document.querySelector('.dispatch-guides').classList.add('aligned');}step(3);}
 if(s===4){opened=true;captured=true;phone.classList.add('review-on');review.hidden=false;camera.inert=true;voice.inert=true;step(5);}
 if(s===6){textPanel.getAnimations().forEach(a=>a.cancel());textPanel.style.setProperty('transition','none','important');textPanel.style.setProperty('transform','translateX(0)','important');original.openText();textPanel.classList.add('entered');stopLegacy();document.dispatchEvent(new Event('demo:text-entry'));}

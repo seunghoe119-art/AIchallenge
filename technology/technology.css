@@ -13,3 +13,5 @@
 @media(prefers-reduced-motion:reduce){.comparison .manual-step,.comparison .touch-hint,.comparison .touch-ripple,.comparison .automatic-route>span,.comparison .automatic-route .flow-gust{animation:none!important}.comparison .touch-hint{opacity:1;transform:translateX(-50%)}.comparison .touch-ripple,.comparison .automatic-route .flow-gust{display:none}.comparison .automatic-route>span{border-color:#6bcbd0}}
 
 .comparison .automatic-route:before,.comparison .automatic-route .flow-gust{top:calc(50% + 30px)}
+
+.comparison .manual-route{gap:6px}.comparison .manual-route>span{font-size:13px;padding:10px 8px;white-space:nowrap}.comparison .manual-route>i{font-size:13px}@media(min-width:601px){.comparison .manual-route{flex-wrap:nowrap}}

@@ -22,3 +22,16 @@
 /* Keep each explanation anchored alongside its own sticky preview. */
 @media(min-width:751px){.readable-features .feature-pair article{position:sticky;top:120px;align-self:start}}
 @media(max-width:750px){.readable-features .feature-pair article{position:relative;top:auto}}
+
+/* One sticky grid keeps the preview and explanation moving together. */
+.readable-features .feature-pair{display:block;min-height:0;padding:48px 0 220px}
+.feature-pair-content{position:sticky;top:120px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:60px;align-items:start}
+.readable-features .feature-pair-content .pair-media{position:relative;top:auto;width:100%;height:calc(100svh - 200px);max-height:680px;min-width:0}
+.readable-features .feature-pair-content article{position:relative;top:auto;min-width:0}
+.readable-features .pair-media.two-captures{gap:12px}
+.readable-features .pair-media.two-captures img{flex:0 1 calc(50% - 6px);min-width:0;width:calc(50% - 6px);max-width:calc(50% - 6px);height:auto;max-height:100%;object-fit:contain}
+@media(max-width:750px){
+.readable-features .feature-pair{padding:30px 0 48px}
+.feature-pair-content{position:relative;top:auto;grid-template-columns:minmax(0,1fr);gap:24px}
+.readable-features .feature-pair-content .pair-media{height:420px;max-height:55svh}
+}

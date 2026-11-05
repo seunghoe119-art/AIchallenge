@@ -36,7 +36,7 @@ $('content').innerHTML=`<article class="answer"><div class="bubble" id="bubble">
 <p>• <strong>탐색·파괴 장비</strong>: 열화상 카메라(TIC), 강제진입도구(도끼·할리건 툴)</p>
 <p>• <strong>통신·안전 장비</strong>: 휴대용 무전기, 조명기구(라이트), 안전로프(생명로프)</p>
 <p class="answer-note">발표용 예시 화면입니다. 실제 활동은 현장 지휘와 해당 기관의 승인된 절차를 따릅니다.</p>
-<button class="btn" style="background:#e8f1fe;color:#236bcc;width:100%" onclick="record()">새 질문하기</button></article>`;
+</article>`;
 $('bubble').innerHTML=question+' <span class="preset-context">나는 청라센터 1경방 · 행동요령 · 무전 예시 · 챙겨야 할 장비 (사전설정)</span>';
 };
 function source(n){$('sourceNo').textContent='['+n+']';$('source').hidden=false}function closeSource(){$('source').hidden=true}document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSource()});intro();

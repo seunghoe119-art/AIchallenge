@@ -24,14 +24,59 @@ button.emergency-card:focus-visible{outline:3px solid var(--accent);outline-offs
 @media(max-width:430px){.emergency-grid{grid-template-columns:1fr}button.emergency-card{min-height:0;padding:24px}.emergency-heading p{font-size:14px}}
 @media(prefers-reduced-motion:reduce){button.emergency-card,.emergency-card .emergency-icon{transition:none!important;transform:none!important}}
 </style>
-</head><body class="global-nav-page"><header class="global-header"><div class="global-header-inner"><a class="global-logo" href="../" aria-label="스마트 전술 AI 홈"><svg width="28" height="30" viewBox="0 0 24 26" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 2 21 5v7c0 5-4 9-9 12C7 21 3 17 3 12V5Z"/><path d="M12 7v11M7 12.5h10"/></svg><span>스마트 전술 AI</span></a><nav class="global-links" aria-label="사이트 주 메뉴"><a href="../">홈</a><a href="../actual-situation/">사례 소개</a><a href="../tactical-ai/">기능 소개</a><a href="../technology/">핵심포인트</a><a href="../feature-test/" aria-current="page">기능 테스트</a></nav><a class="global-demo-cta" href="../mockup/index.html">시연 체험하기 <span aria-hidden="true">↗</span></a></div></header><main><section class="emergency-fields" aria-labelledby="emergency-title">
+
+<style>
+.comparison-panel[hidden]{display:none!important}
+.comparison-panel{margin-top:34px;padding:32px;border:1px solid #d4e2e9;border-radius:24px;background:#fff;box-shadow:0 12px 36px #183e4c08;scroll-margin-top:calc(var(--site-header-height,88px) + 24px);animation:panelReveal .3s ease both}
+.comparison-panel-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:24px}
+.comparison-kicker{font-size:11px;letter-spacing:.15em;color:#df404b;font-weight:750}
+.comparison-panel-heading h2{margin:10px 0 0;font-size:clamp(22px,2.5vw,30px);letter-spacing:-.04em;color:#132d39;line-height:1.4}
+.comparison-close,.copy-prompt{font:600 13px inherit;flex-shrink:0;padding:10px 16px;border:1px solid #d1e1e8;border-radius:10px;background:#f6fafc;color:#264c5b;cursor:pointer}
+.comparison-close:hover,.copy-prompt:hover{background:#e8f5f7;border-color:#168b9e}
+.notebook-link{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 24px;border:1px solid #bcdde3;border-radius:16px;background:#eef8fa;color:#126477;text-decoration:none;margin-bottom:26px;transition:background .2s}
+.notebook-link:hover{background:#def1f5}
+.notebook-link strong{display:block;font-size:17px}.notebook-link small{display:block;margin-top:7px;font-size:14px;color:#607e89;line-height:1.6}.notebook-link>span:last-child{font-size:26px}
+.prompt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.prompt-card{min-width:0;padding:24px;border:1px solid #dce6ec;border-radius:18px;background:#fafcfe}
+.prompt-card-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
+.prompt-card-heading h3{font-size:20px;color:#132d39;margin:0}
+.prompt-text{font-size:16px;line-height:1.95;color:#314f5e;word-break:keep-all;overflow-wrap:anywhere;user-select:text}
+.prompt-context{color:#d83243;font-weight:650}
+.copy-status{min-height:24px;margin:16px 0 0;color:#168094;font-size:14px}
+button.emergency-card.fire[aria-expanded="true"]{border-color:#df404b;background:#fff5f6;box-shadow:0 8px 24px #df404b12}
+.comparison-panel button:focus-visible,.notebook-link:focus-visible,.prompt-text:focus-visible{outline:3px solid #168b9e;outline-offset:4px}
+@keyframes panelReveal{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media(max-width:750px){.comparison-panel{padding:22px 18px}.prompt-grid{grid-template-columns:1fr}.prompt-card{padding:20px}.notebook-link{padding:18px}.comparison-panel-heading{gap:12px}}
+@media(prefers-reduced-motion:reduce){.comparison-panel{animation:none}}
+</style></head><body class="global-nav-page"><header class="global-header"><div class="global-header-inner"><a class="global-logo" href="../" aria-label="스마트 전술 AI 홈"><svg width="28" height="30" viewBox="0 0 24 26" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 2 21 5v7c0 5-4 9-9 12C7 21 3 17 3 12V5Z"/><path d="M12 7v11M7 12.5h10"/></svg><span>스마트 전술 AI</span></a><nav class="global-links" aria-label="사이트 주 메뉴"><a href="../">홈</a><a href="../actual-situation/">사례 소개</a><a href="../tactical-ai/">기능 소개</a><a href="../technology/">핵심포인트</a><a href="../feature-test/" aria-current="page">기능 테스트</a></nav><a class="global-demo-cta" href="../mockup/index.html">시연 체험하기 <span aria-hidden="true">↗</span></a></div></header><main><section class="emergency-fields" aria-labelledby="emergency-title">
 <div class="emergency-inner"><div class="emergency-heading"><span>COMPARE BY FIELD</span><h2 id="emergency-title">직접 비교해 보세요</h2><p>현장 대응부터 소방 법령까지, 6개 분야를 한눈에 살펴보세요.</p></div>
 <div class="emergency-grid">
-<button type="button" class="emergency-card fire"><div class="emergency-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22c4.5 0 8-3.5 8-8 0-3-1.5-5.5-4-7 .2 2.5-1 3.5-2 4 0-4-2.5-7-5-9 .5 3-1 5-2.5 7C5 11 4 13 4 15c0 4 3.5 7 8 7z"/><path d="M12 22c2.2 0 4-1.8 4-4 0-2-1.5-3.5-3-5 0 2-1 3-2 4-.5-1-1-1.5-1-2.5C8.5 16 8 17.5 8 18c0 2.2 1.8 4 4 4z"/></svg></div><h3>화재</h3><p>신속한 화재진압과 인명보호<br>화재 예방 및 피해 최소화</p></button>
+<button type="button" class="emergency-card fire" id="fireCompare" aria-expanded="false" aria-controls="firePrompts"><div class="emergency-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22c4.5 0 8-3.5 8-8 0-3-1.5-5.5-4-7 .2 2.5-1 3.5-2 4 0-4-2.5-7-5-9 .5 3-1 5-2.5 7C5 11 4 13 4 15c0 4 3.5 7 8 7z"/><path d="M12 22c2.2 0 4-1.8 4-4 0-2-1.5-3.5-3-5 0 2-1 3-2 4-.5-1-1-1.5-1-2.5C8.5 16 8 17.5 8 18c0 2.2 1.8 4 4 4z"/></svg></div><h3>화재</h3><p>신속한 화재진압과 인명보호<br>화재 예방 및 피해 최소화</p></button>
 <button type="button" class="emergency-card rescue"><div class="emergency-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6m5.6 5.6 3.6 3.6m0-12.8-3.6 3.6m-5.6 5.6-3.6 3.6"/></svg></div><h3>구조</h3><p>각종 재난 및 사고 현장 대응<br>위험에 처한 인명 구조</p></button>
 <button type="button" class="emergency-card medical"><div class="emergency-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-4.8-8-11a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 6.2-8 11-8 11z"/><path d="M12 9v6m-3-3h6"/></svg></div><h3>구급</h3><p>응급환자 현장 처치 및 이송<br>신속하고 전문적인 응급의료</p></button>
 <button type="button" class="emergency-card hazmat"><div class="emergency-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10.3 3.8-7.8 14.2a2 2 0 0 0 1.8 3h15.4a2 2 0 0 0 1.8-3L13.7 3.8a2 2 0 0 0-3.4 0z"/><path d="M12 9v5"/><circle cx="12" cy="17" r=".8" fill="currentColor" stroke="none"/></svg></div><h3>위험물</h3><p>위험물 사고 예방 및 안전관리<br>유해물질 누출 사고 대응</p></button>
 
 <button type="button" class="emergency-card facilities"><div class="emergency-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H5v18h14V8l-5-5Z"/><path d="M14 3v5h5M8 11h4M8 15h3"/><path d="m15 12 4 1.5V17c0 2-1.7 3.5-4 4.5-2.3-1-4-2.5-4-4.5v-3.5l4-1.5Z"/><path d="m13.5 16.5 1 1 2-2"/></svg></div><h3>소방시설법</h3><p>소방시설 설치 및 유지관리<br>안전 기준과 법령 확인</p></button>
 <button type="button" class="emergency-card public-use"><div class="emergency-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V8l9-5 9 5v13M2 21h20M9 21v-6h6v6M7 9h1m8 0h1M7 12h1m8 0h1"/><circle cx="12" cy="9" r="1.5"/></svg></div><h3>다중이용업</h3><p>다중이용업소의 안전관리<br>예방 기준과 현장 점검</p></button>
-</div></div></section></main></body></html>
+</div>
+<section id="firePrompts" class="comparison-panel" aria-labelledby="firePromptsTitle" hidden>
+<div class="comparison-panel-heading"><div><span class="comparison-kicker">FIRE · 화재</span><h2 id="firePromptsTitle" tabindex="-1">같은 상황을 직접 질문해 보세요.</h2></div><button type="button" class="comparison-close" aria-label="화재 비교 창 닫기">닫기 ×</button></div>
+<a class="notebook-link" href="https://notebook.google.com/notebook/a1210cbd-c22a-44ae-8e5b-8bb0d023a578" target="_blank" rel="noopener noreferrer"><span><strong>화재 NotebookLM 열기</strong><small>아래 프롬프트를 복사해 붙여넣어 보세요.</small></span><span aria-hidden="true">↗</span></a>
+<div class="prompt-grid">
+<article class="prompt-card"><div class="prompt-card-heading"><h3>출동전</h3><button type="button" class="copy-prompt" data-prompt="beforePrompt">복사</button></div><div class="prompt-text" id="beforePrompt" tabindex="0">청라디월팰리스건물 11층, 키즈카페 , 다량 연기가 보인다,<br><span class="prompt-context">(화재경방 출동대원, 챙길 장비, 행동과유의사항)</span></div></article>
+<article class="prompt-card"><div class="prompt-card-heading"><h3>출동후</h3><button type="button" class="copy-prompt" data-prompt="afterPrompt">복사</button></div><div class="prompt-text" id="afterPrompt" tabindex="0">건물 층 도착했는데 연기가 가득차서 앞으로 갈수가 없다<br><span class="prompt-context">(화재경방 출동대원, 챙길 장비, 행동과유의사항)</span></div></article>
+</div><p class="copy-status" role="status" aria-live="polite"></p>
+</section></div></section></main>
+<script>
+(()=>{
+const trigger=document.getElementById('fireCompare'),panel=document.getElementById('firePrompts'),status=panel.querySelector('.copy-status');
+const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
+trigger.addEventListener('click',()=>{const open=panel.hidden;panel.hidden=!open;trigger.setAttribute('aria-expanded',String(open));if(open){panel.scrollIntoView({behavior:reduced()?'instant':'smooth',block:'start'});document.getElementById('firePromptsTitle').focus({preventScroll:true});}});
+panel.querySelector('.comparison-close').addEventListener('click',()=>{panel.hidden=true;trigger.setAttribute('aria-expanded','false');trigger.focus();});
+panel.querySelectorAll('.copy-prompt').forEach(button=>button.addEventListener('click',async()=>{
+const source=document.getElementById(button.dataset.prompt),text=source.innerText;
+try{await navigator.clipboard.writeText(text);status.textContent=button.dataset.prompt==='beforePrompt'?'출동전 프롬프트를 복사했습니다.':'출동후 프롬프트를 복사했습니다.';button.textContent='복사 완료';setTimeout(()=>button.textContent='복사',1800);}
+catch{const range=document.createRange();range.selectNodeContents(source);const selection=window.getSelection();selection.removeAllRanges();selection.addRange(range);status.textContent='문장을 선택했습니다. Ctrl+C 또는 복사를 눌러 주세요.';}
+}));
+})();
+</script></body></html>

@@ -5,7 +5,7 @@ if(playButton?.textContent==='일시정지')playButton.click();
 const panel=document.createElement('section');panel.id='effectsPlayer';panel.className='opening-film';panel.style.zIndex='30';
 const clip=document.createElement('video');clip.className='presentation-video';clip.controls=true;clip.playsInline=true;clip.preload='auto';
 const label=document.createElement('div');label.style.cssText='position:absolute;top:16px;left:16px;background:#071525cc;color:white;padding:10px;border-radius:10px';
-const close=document.createElement('button');close.className='video-close';close.textContent='답변으로 돌아가기';close.onclick=()=>{clip.pause();panel.remove();document.body.classList.remove('film-playing');};
+const close=document.createElement('button');close.className='video-close';close.type='button';close.textContent='닫기 ×';close.setAttribute('aria-label','영상 닫고 시연으로 돌아가기');const previousFocus=document.activeElement;const onKey=e=>{if(e.key==='Escape')close.click();};close.onclick=()=>{clip.pause();panel.remove();document.body.classList.remove('film-playing');document.removeEventListener('keydown',onKey);previousFocus?.focus();};document.addEventListener('keydown',onKey);
 const next=document.createElement('button');next.className='video-close';next.style.top='65px';next.textContent='두 번째 영상 ▶';
 const caption=document.createElement('div');caption.className='effect-caption';caption.innerHTML='<span>경방은 스스로 필요한 장비를 챙기고,</span><span>지휘관은 지시할때 참고 할 수 있습니다</span>';
 const notice=document.createElement('p');notice.className='effect-notice';notice.textContent='※ AI 생성 영상으로, 면체 착용 중 말하는 모습이 부자연스러울 수 있습니다.';notice.hidden=true;
@@ -21,7 +21,20 @@ clip.addEventListener('playing',()=>{if(index===2)revealActualSituation(false,tr
 function load(i){index=i;label.textContent='기대효과 '+(i+1)+' / '+files.length;next.hidden=i===files.length-1;next.textContent=(i===0?'두 번째':'세 번째')+' 영상 ▶';clip.src=files[i];updateCaption();clip.play().catch(()=>{label.textContent+=' · 재생 버튼을 눌러 주세요';});}
 next.onclick=()=>load(index+1);clip.onended=()=>{if(index<files.length-1)load(index+1);else revealActualSituation();};
 clip.onerror=()=>{label.textContent='영상을 불러오지 못했습니다.';};
-panel.append(clip,label,close,next,notice,caption);document.body.append(panel);document.body.classList.add('film-playing');load(0);
+const toolbar=document.createElement('div');toolbar.className='effect-toolbar';toolbar.append(label,next,close);
+const layoutStyle=document.createElement('style');layoutStyle.textContent=`
+body #effectsPlayer.opening-film{position:fixed!important;top:calc(var(--site-header-height,126px) + 12px)!important;bottom:128px!important;height:auto!important;min-height:0;display:flex!important;flex-direction:column;z-index:1100!important}
+#effectsPlayer .effect-toolbar{display:flex;align-items:center;gap:12px;flex-shrink:0;min-height:58px;padding:8px 14px;background:#0c1924;border-bottom:1px solid #ffffff20}
+#effectsPlayer .effect-toolbar>div{position:static!important;padding:0!important;background:none!important;margin-right:auto;font-size:14px}
+#effectsPlayer .effect-toolbar button{position:static!important;flex-shrink:0;min-height:42px;padding:10px 16px;border:1px solid #a8dbe355;background:#173642;color:#f3ffff;border-radius:10px;cursor:pointer;font:600 14px Pretendard,sans-serif}
+#effectsPlayer .effect-toolbar button:hover{background:#22505e}
+#effectsPlayer .effect-toolbar button:focus-visible{outline:3px solid #8de0e7;outline-offset:2px}
+#effectsPlayer .effect-toolbar button[hidden]{display:none!important}
+#effectsPlayer.has-caption .presentation-video{flex:1 1 0;width:100%;height:0;min-height:0;object-fit:contain}
+#effectsPlayer .effect-caption{position:static;flex-shrink:0;margin:0;padding:12px 16px 18px;font-size:clamp(13px,1.5vw,21px)}
+#effectsPlayer .effect-notice{position:static;flex-shrink:0;margin:0;padding:8px 16px 0;font-size:12px}
+@media(max-width:850px){body #effectsPlayer.opening-film{left:12px!important;right:12px!important;bottom:140px!important}.effect-toolbar{gap:6px!important}#effectsPlayer .effect-toolbar{padding:8px}#effectsPlayer .effect-toolbar>div{font-size:11px}#effectsPlayer .effect-toolbar button{font-size:12px;padding:8px 10px}#effectsPlayer .effect-caption{padding:8px 10px 12px}}
+`;panel.append(layoutStyle,toolbar,clip,notice,caption);document.body.append(panel);document.body.classList.add('film-playing');load(0);close.focus();
 };
 
 function revealActualSituation(completed=true,highlight=false){

@@ -1,0 +1,49 @@
+name: Remove video audio
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.mp4'
+      - '.github/workflows/silent-videos.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: silent-videos
+  cancel-in-progress: false
+jobs:
+  silence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Install media tools
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Remove and verify all audio streams
+        shell: bash
+        run: |
+          set -euo pipefail
+          while IFS= read -r -d '' video; do
+            audio="$(ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 "$video")"
+            if [ -n "$audio" ]; then
+              tmp="${video%.mp4}.silent-tmp.mp4"
+              ffmpeg -nostdin -v error -i "$video" -map 0:v -c:v copy -an -movflags +faststart "$tmp"
+              mv "$tmp" "$video"
+            fi
+            test -z "$(ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 "$video")"
+            echo "$video: no audio streams" >> "$GITHUB_STEP_SUMMARY"
+          done < <(find . -type f -name '*.mp4' -print0)
+      - name: Save silent videos
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- '*.mp4'
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Remove audio tracks from all site videos'
+          git pull --rebase origin main
+          git push origin HEAD:main
